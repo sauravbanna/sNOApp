@@ -1,0 +1,1 @@
+export const FONT_SIZE = 0.04;

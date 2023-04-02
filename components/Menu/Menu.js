@@ -2,12 +2,12 @@ import { StyleSheet, View, Dimensions, Button, Text, TouchableOpacity, ToastAndr
 import { Entypo } from '@expo/vector-icons';
 import { Octicons } from '@expo/vector-icons';
 import { useState } from 'react'
-
-const FONT_SIZE = 0.04;
+import { AntDesign } from '@expo/vector-icons';
+import { FONT_SIZE } from "../../constants"
 
 const TRANSPORT = ["Mode of Transport", "Car", "Bus"]
 
-const Menu = () => {
+const Menu = ({submitStuck}) => {
     const [expanded, setExpanded] = useState(false);
 
     const [menuText, setMenuText] = useState("Mode of Transport");
@@ -58,11 +58,80 @@ const Menu = () => {
                     </TouchableOpacity>
                 </View>
             </View>
-            <TouchableOpacity style={{...styles.dropdown_unit, ...styles.button}}>
+            <TouchableOpacity
+                style={
+                    {
+                        ...styles.dropdown_unit,
+                        ...styles.button,
+                        backgroundColor: selected == 0 ? "grey" : "#0A192D"
+                    }
+                }
+                onPress={() => {
+                    if (selected != 0) {
+                        submitStuck();
+                    }
+                }}
+            >
                 <Text style={{...styles.text, textAlign: "center"}}>
                      {"I'm Stuck!"}
                 </Text>
             </TouchableOpacity>
+        </View>
+    );
+}
+
+const SubmittedMenu = ({timeTaken, submitStuck}) => {
+    return (
+        <View style={styles.menu}>
+            <Octicons
+                name="horizontal-rule"
+                size={Dimensions.get('window').height * FONT_SIZE * 2}
+                color="white"
+            />
+             <Text style={styles.title}>
+                {"Waiting for Plow..."}
+            </Text>
+            <Text style={{...styles.text, marginBottom: Dimensions.get('window').height * FONT_SIZE}}>
+                {"Your estimated Waiting time is"}
+            </Text>
+            <Text style={styles.title}>
+                <AntDesign name="clockcircle" size={Dimensions.get('window').height * FONT_SIZE} color="white" />
+                &nbsp;
+                {`${Math.round(timeTaken)} Mins`}
+            </Text>
+            <View style={{display: "flex", flexDirection: "row", justifyContent: "space-evenly", width: "100%"}}>
+                <TouchableOpacity
+                    style={
+                        {
+                            ...styles.dropdown_unit,
+                            ...styles.button,
+                            width: "auto",
+                            backgroundColor: "#0A192D"
+                        }
+                    }
+                >
+                    <Text style={{...styles.text, fontSize:Dimensions.get('window').height * FONT_SIZE * 0.5, textAlign: "center"}}>
+                         {"Find Alternate Routes"}
+                    </Text>
+                </TouchableOpacity>
+                <TouchableOpacity
+                    style={
+                        {
+                            ...styles.dropdown_unit,
+                            ...styles.button,
+                            width: "auto",
+                            backgroundColor: "#0A192D"
+                        }
+                    }
+                    onPress={() => {
+                        submitStuck();
+                    }}
+                >
+                    <Text style={{...styles.text, fontSize:Dimensions.get('window').height * FONT_SIZE * 0.5, textAlign: "center"}}>
+                         {"Recalculate"}
+                    </Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 }
@@ -86,7 +155,6 @@ const styles = StyleSheet.create({
     borderRadius: Dimensions.get('window').height * 0.02,
     display: "flex",
     justifyContent: "center",
-    backgroundColor: "grey",
     padding: Dimensions.get('window').height * FONT_SIZE * 0.4,
   },
   title: {
@@ -130,4 +198,4 @@ const styles = StyleSheet.create({
 });
 
 
-export default Menu
+export { Menu, SubmittedMenu };
