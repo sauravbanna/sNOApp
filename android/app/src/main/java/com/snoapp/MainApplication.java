@@ -16,7 +16,6 @@ import expo.modules.ApplicationLifecycleDispatcher;
 import expo.modules.ReactNativeHostWrapper;
 
 import com.airbnb.android.react.maps.MapsPackage;
-import org.devio.rn.splashscreen.SplashScreenReactPackage;
 
 import java.util.List;
 
@@ -36,7 +35,6 @@ public class MainApplication extends Application implements ReactApplication {
         // Packages that cannot be autolinked yet can be added manually here, for example:
         // packages.add(new MyReactNativePackage());
         // packages.add(new MapsPackage());
-        packages.add(new SplashScreenReactPackage());
         return packages;
       }
 
@@ -63,7 +61,6 @@ public class MainApplication extends Application implements ReactApplication {
 
   @Override
   public void onCreate() {
-    SplashScreen.show(this);
     super.onCreate();
     SoLoader.init(this, /* native exopackage */ false);
     if (BuildConfig.IS_NEW_ARCHITECTURE_ENABLED) {

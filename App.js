@@ -8,7 +8,6 @@ import { FontAwesome5 } from '@expo/vector-icons';
 import { FONT_SIZE } from "./constants"
 import MapViewDirections from 'react-native-maps-directions'
 import { getDistance } from 'geolib';
-import SplashScreen from "react-native-splash-screen";
 
 import * as Location from 'expo-location';
 
@@ -51,7 +50,6 @@ export default function App() {
             longitudeDelta: 0.05
         };
         mapRef.current.animateToRegion(r);
-        SplashScreen.hide();
     }, [location])
 
 
